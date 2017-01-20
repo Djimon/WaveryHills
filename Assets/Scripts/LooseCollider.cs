@@ -12,8 +12,10 @@ public class LooseCollider : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D trigger)
 	{
-		//print ("Trigger"); // detect whether is trigger
-		levelManager.LoadLevel("Lose");
+        //print ("Trigger"); // detect whether is trigger
+        //levelManager.LoadLevel("Lose");
+        Debug.Log("Loose: " + trigger.gameObject.GetComponent<Ball>().GetOwner());
+        // der andere player kriegt den Ball
 		
 	}
 

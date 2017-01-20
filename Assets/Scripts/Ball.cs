@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Ball : MonoBehaviour {
 	
@@ -8,6 +9,12 @@ public class Ball : MonoBehaviour {
 	
 	private Vector3 paddleToBallVector;
 	private bool klicked = false;
+    private int owner;
+
+    public int GetOwner()
+    {
+        return this.owner;
+    }
 	
 	
 	// Use this for initialization
@@ -20,7 +27,7 @@ public class Ball : MonoBehaviour {
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		Vector2 tweak = new Vector2(Random.Range(0f,0.5f),Random.Range(0f,0.5f));
+		Vector2 tweak = new Vector2(UnityEngine.Random.Range(0f,0.5f), UnityEngine.Random.Range(0f,0.5f));
 		if (klicked)
 		{
 			GetComponent<AudioSource>().Play();
@@ -45,11 +52,11 @@ public class Ball : MonoBehaviour {
 		}
 
 	}
-	
-	
-	
-	// Update is called once per frame
-	void Update () 
+
+
+
+    // Update is called once per frame
+    void Update () 
 	{		
 		if (!klicked)
 		{
@@ -67,4 +74,10 @@ public class Ball : MonoBehaviour {
 		}
 			
 	}
+
+    public void ChangeOwner(GameObject Paddle)
+    {
+        owner = Paddle.GetComponent<Paddle>().Controller;
+        Debug.Log("Change Owner to :"+ owner);
+    }
 }
