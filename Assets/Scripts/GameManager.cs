@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -23,9 +24,10 @@ public class GameManager : MonoBehaviour {
 
     static GameObject currentOwner;
     static GameObject lastOwner;
-    static int scoreP1;
-    static int scoreP2;
     static int Controller;
+
+    static Text scoreP1, scoreP2;
+    static int points_P1, points_P2;
 
     public Ball ball;
     // Use this for initialization
@@ -33,9 +35,13 @@ public class GameManager : MonoBehaviour {
     {
         lastOwner = GameObject.Find("Player2");
         currentOwner = GameObject.Find("Player1");
-        UpdateView();
+        UpdateOwner();
         Controller = currentOwner.GetComponent<Paddle>().Controller;
         GameObject.Instantiate(ball);
+        scoreP1 = GameObject.Find("Score_P1").GetComponent<Text>();
+        scoreP2 = GameObject.Find("Score_P2").GetComponent<Text>();
+        points_P1 = 0;
+        points_P2 = 1;
     }
 
     /// <summary>
@@ -56,11 +62,11 @@ public class GameManager : MonoBehaviour {
         GameObject Temp = lastOwner;
         lastOwner = currentOwner;
         currentOwner = Temp;
-        UpdateView();  
+        UpdateOwner();  
         Controller = currentOwner.GetComponent<Paddle>().Controller; 
     }
 
-    private static void UpdateView()
+    private static void UpdateOwner()
     {
         SpriteRenderer last = lastOwner.GetComponent<SpriteRenderer>();
         SpriteRenderer know = lastOwner.GetComponent<SpriteRenderer>();
@@ -70,8 +76,21 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update ()
-    { 
-        
-		
+    {
+        		
 	}
+
+    public static void UpdateScore()
+    {
+        scoreP1.text = points_P1.ToString();
+        scoreP2.text = points_P2.ToString();
+    }
+
+    public static void AddPoint(int Player)
+    {
+        if (Player == 1)
+            points_P1++;
+        if (Player == 2)
+            points_P2++;        
+    }
 }

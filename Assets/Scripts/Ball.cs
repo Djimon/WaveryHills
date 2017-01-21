@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour {
 	void Start () 
 	{
         klicked = false;
-		paddle = GameObject.FindObjectOfType<Paddle>();
+        paddle = GameManager.GetOwner().GetComponent<Paddle>();
         this.transform.position = paddle.transform.position + new Vector3(0f,1f,0f);
         paddleToBallVector = this.transform.position - paddle.transform.position; //DebugModus
         
