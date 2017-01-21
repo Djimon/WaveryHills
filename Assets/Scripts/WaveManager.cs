@@ -142,7 +142,7 @@ public class WaveManager : MonoBehaviour {
         {
             result += wave.GetSample(x);
         }
-        return result + ZeroLevel;
+        return result + ZeroLevel + transform.position.y;
     }
 
     void DrawWave()
