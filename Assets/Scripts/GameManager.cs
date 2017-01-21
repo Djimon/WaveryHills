@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour {
     private static void UpdateOwner()
     {
         SpriteRenderer last = lastOwner.GetComponent<SpriteRenderer>();
-        SpriteRenderer know = lastOwner.GetComponent<SpriteRenderer>();
+        SpriteRenderer know = currentOwner.GetComponent<SpriteRenderer>();
         last.color = new Color(last.color.r, last.color.g, last.color.b, 0.3f);
         know.color = new Color(know.color.r, know.color.g, know.color.b, 1f);
     }
