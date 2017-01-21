@@ -25,11 +25,19 @@ public class WaveManager : MonoBehaviour {
     [SerializeField]
     float _PushForce;
 
+    LineRenderer lineRenderer;
+    const int numSamples = 500;
+    Vector3[] pointsOnLine = new Vector3[numSamples];
 
     // Use this for initialization
     void Start ()
     {
-
+        lineRenderer = GetComponent<LineRenderer>();
+        for (int i = 0; i < numSamples-1; i++)
+        {
+            pointsOnLine[i] = Vector3.zero;
+        }
+        lineRenderer.numPositions = numSamples-1;
     }
 	
 	// Update is called once per frame
@@ -80,6 +88,7 @@ public class WaveManager : MonoBehaviour {
         {
             Waves.Remove(waveToBeDeleted);
         }
+        DrawWave();
     }
 
     /// <summary>
@@ -119,6 +128,8 @@ public class WaveManager : MonoBehaviour {
         {
             samples[i] = SampleAllWavesAt(x);
             xValues[i] = x;
+            pointsOnLine[i].x = x;
+            pointsOnLine[i].y = samples[i];
             x += stepSize;
         }
         return samples;
@@ -134,6 +145,16 @@ public class WaveManager : MonoBehaviour {
         return result + ZeroLevel + transform.position.y;
     }
 
+    void DrawWave()
+    {
+
+        float[] xValues;
+        float[] yValues = GetSamples(LeftBorder, RightBorder, numSamples, out xValues);
+
+        lineRenderer.SetPositions(pointsOnLine);
+    }
+
+    /*
     void OnDrawGizmos()
     {
         int numSamples = 500;
@@ -145,5 +166,5 @@ public class WaveManager : MonoBehaviour {
         {
             Gizmos.DrawLine(new Vector2(xValues[i], yValues[i]), new Vector2(xValues[i+1], yValues[i+1]));
         }
-    }
+    }*/
 }

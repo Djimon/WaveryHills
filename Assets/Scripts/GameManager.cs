@@ -14,6 +14,13 @@ public class GameManager : MonoBehaviour {
      * Manage PowerUp -> Schicke an Owner
      * Zähle Punkte
      */
+
+    public enum Player
+    {
+        One,
+        Two,
+    }
+
     enum PowerUps
     {
         BigBall, //Balll über der Welle wir größer
@@ -104,11 +111,11 @@ public class GameManager : MonoBehaviour {
         scoreP2.text = points_P2.ToString();
     }
 
-    public static void AddPoint(int Player)
+    public static void AddPoint(Player Player)
     {
-        if (Player == 1)
+        if (Player == Player.One)
             points_P1++;
-        if (Player == 2)
+        if (Player == Player.Two)
             points_P2++;        
     }
 }

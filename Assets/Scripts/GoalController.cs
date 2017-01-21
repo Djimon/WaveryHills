@@ -7,23 +7,27 @@ using System;
 public class GoalController : MonoBehaviour {
 
     public GameObject SoccerBall;
-    public int Player;
+    public GameManager.Player Player;
     public GameObject Light;
+
+    Vector3 initialBallPosition;
+
+
 	// Use this for initialization
-	void Start ()
-    {
+	void Start () {
+        initialBallPosition = SoccerBall.transform.position;
         Debug.LogError("?: " + Light.name);
 	}
 
-    void OnTriggerEnter2D(Collider2D trigger)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        // Resett Ballposistion
         Light.SetActive(true);
         Invoke("LightOut", 0.5f);
         GameManager.AddPoint(Player);
-        GameManager.UpdateScore();
+
+        // Reset Ball position
         SoccerBall.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
-        SoccerBall.GetComponent<Transform>().position = new Vector3(0f,7f,0f);    
+        SoccerBall.transform.position = initialBallPosition;       
     }
 
     private void LightOut()
