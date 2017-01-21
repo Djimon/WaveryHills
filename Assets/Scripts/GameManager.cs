@@ -30,18 +30,27 @@ public class GameManager : MonoBehaviour {
     static int points_P1, points_P2;
 
     public Ball ball;
+
+    private Animator SlotMachine, SHLeft, SHRight;
     // Use this for initialization
     void Start ()
     {
-        lastOwner = GameObject.Find("Player2");
+        
+        lastOwner    = GameObject.Find("Player2");
         currentOwner = GameObject.Find("Player1");
         UpdateOwner();
-        Controller = currentOwner.GetComponent<Paddle>().Controller;
+        Controller   = currentOwner.GetComponent<Paddle>().Controller;
+        
+        scoreP1      = GameObject.Find("Score_P1").GetComponent<Text>();
+        scoreP2      = GameObject.Find("Score_P2").GetComponent<Text>();
+        points_P1    = 0;
+        points_P2    = 0;
+
+        SlotMachine  = GameObject.Find("SlotMachine").GetComponent<Animator>();
+        SHLeft       = GameObject.Find("SHLeft").GetComponent<Animator>();
+        SHRight      = GameObject.Find("SHRight").GetComponent<Animator>();
+
         GameObject.Instantiate(ball);
-        scoreP1 = GameObject.Find("Score_P1").GetComponent<Text>();
-        scoreP2 = GameObject.Find("Score_P2").GetComponent<Text>();
-        points_P1 = 0;
-        points_P2 = 1;
     }
 
     /// <summary>

@@ -9,26 +9,34 @@ public class Slotholder : MonoBehaviour {
     public GameObject left,right,SlotMachine;
     public float distance;
     private float SlotWidth;
+    Animator test;
 
     // Use this for initialization
     void Start()
     {
-        SlotWidth = distance = GetWidth(SlotMachine);
-        //gameObject.transform.position = new Vector3(0f,4.6f,0f);        
-        Instantiate(left).transform.position = transform.position - new Vector3(distance/2,0f);
+        SlotWidth =  GetWidth(SlotMachine);
+        distance = SlotWidth;
+        Debug.LogWarning("distance: " + SlotWidth);
+        //gameObject.transform.position = new Vector3(0f,4.6f,0f);  
+        Instantiate(left).transform.position = transform.position - new Vector3(distance / 2, 0f);
         Instantiate(right).transform.position = transform.position + new Vector3(distance / 2, 0f);
+        
 
     }
-
+    private void UpdateView()
+    {
+        left.transform.position = transform.position - new Vector3(distance / 2, 0f);
+        right.transform.position = transform.position + new Vector3(distance / 2, 0f);
+    }
     private float GetWidth(GameObject Obj)
     {
-        return (Obj.transform.TransformPoint(0, 0, 0).x - Obj.transform.TransformPoint(1, 1, 0).x);
+        return Obj.GetComponent<BoxCollider2D>().bounds.size.x;
     }
 
     // Update is called once per frame
     void Update ()
     {
-		
+        UpdateView();
     }
     /// <summary>
     /// Fades out the Slotmachine and shows a Timer during the PowerUp
