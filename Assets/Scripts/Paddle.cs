@@ -22,7 +22,7 @@ public class Paddle : MonoBehaviour {
     private void Move(float xMovementInput)
     {
         paddlePos.x += xMovementInput * MaxMoveSpeed * Time.deltaTime;
-        paddlePos.x = Mathf.Clamp(paddlePos.x, 0.5f, 15.5f);
+        paddlePos.x = Mathf.Clamp(paddlePos.x, -10f, 10f);
         this.transform.position = paddlePos;
     }
 
@@ -36,29 +36,14 @@ public class Paddle : MonoBehaviour {
 	
 	private void OnCollisionEnter2D(Collision2D col) 
 	{
-        Debug.Log("bounce bounce");
+        //Debug.Log("bounce bounce");
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
         Move(InputController.PaddleMovement(Controller));
-
-        // other stuff
-        if (Input.GetButton("P1_XButton"))
-        {
-            Debug.Log("PowerUp Player 1");
-        }
-
-        if (Input.GetButton("P2_XButton"))
-        {
-            Debug.Log("PowerUp Player 2");
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("PowerUp Keyboard");
-        }
-        //AutoPlay(); // Debug-Modus			
+	
     }
 
 

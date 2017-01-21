@@ -154,7 +154,7 @@ public class WaveManager : MonoBehaviour {
         lineRenderer.SetPositions(pointsOnLine);
     }
 
-    /*
+    
     void OnDrawGizmos()
     {
         int numSamples = 500;
@@ -166,5 +166,5 @@ public class WaveManager : MonoBehaviour {
         {
             Gizmos.DrawLine(new Vector2(xValues[i], yValues[i]), new Vector2(xValues[i+1], yValues[i+1]));
         }
-    }*/
+    }
 }

@@ -28,3 +28,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+/Assets/Sprites/controller.xcf
+/Assets/Sprites/controller.xcf.meta

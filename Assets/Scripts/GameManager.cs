@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
      * Zähle Punkte
      */
 
+    public static GameManager Instance { get; private set; }
+
     public enum Player
     {
         One,
@@ -29,12 +31,12 @@ public class GameManager : MonoBehaviour {
         Tsunami // Amplitude höher
     }
 
-    static GameObject currentOwner;
-    static GameObject lastOwner;
-    static int Controller;
+    GameObject currentOwner;
+    GameObject lastOwner;
+    int Controller;
 
-    static Text scoreP1, scoreP2;
-    static int points_P1, points_P2;
+    Text scoreP1, scoreP2;
+    int points_P1, points_P2;
 
     public Ball ball;
 
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        Instance = this;
         
         lastOwner    = GameObject.Find("Player2");
         currentOwner = GameObject.Find("Player1");
@@ -60,34 +63,54 @@ public class GameManager : MonoBehaviour {
         GameObject.Instantiate(ball);
     }
 
+    public Color SendColor()
+    {
+        if (Controller == 1)
+            return new Color(0f, 255f, 200f);
+        else if (Controller == 2)
+            return new Color(255f, 152, 0f);
+        else return new Color(255f,255f,255f);
+    }
+
     /// <summary>
     /// returns the current active Player (Paddle)
     /// </summary>
     /// <returns>GameObject</returns>
-    public static GameObject GetOwner()
+    public GameObject GetOwner()
     {
         return currentOwner;
     }
 
-    public static int GetControler()
+    public int GetControler()
     {
         return Controller;
     }
-    public static void ChangeOwner()
+    
+    public void ChangeOwner()
     {
         GameObject Temp = lastOwner;
         lastOwner = currentOwner;
         currentOwner = Temp;
         UpdateOwner();  
-        Controller = currentOwner.GetComponent<Paddle>().Controller; 
+        Controller = currentOwner.GetComponent<Paddle>().Controller;
+        StartCoroutine(ToggleColliders(currentOwner.GetComponent<Collider2D>(), lastOwner.GetComponent<Collider2D>()));
     }
 
-    private static void UpdateOwner()
+    private void UpdateOwner()
     {
+        Debug.Log("UpdateOwner");
         SpriteRenderer last = lastOwner.GetComponent<SpriteRenderer>();
         SpriteRenderer know = currentOwner.GetComponent<SpriteRenderer>();
         last.color = new Color(last.color.r, last.color.g, last.color.b, 0.3f);
         know.color = new Color(know.color.r, know.color.g, know.color.b, 1f);
+    }
+
+    IEnumerator ToggleColliders(Collider2D enableCollider, Collider2D disableCollider)
+    {
+        yield return new WaitForSeconds(0.1F);
+
+        enableCollider.enabled = true;
+        disableCollider.enabled = false;
     }
 
     // Update is called once per frame
@@ -96,13 +119,13 @@ public class GameManager : MonoBehaviour {
         		
 	}
 
-    public static void UpdateScore()
+    public void UpdateScore()
     {
         scoreP1.text = points_P1.ToString();
         scoreP2.text = points_P2.ToString();
     }
 
-    public static void AddPoint(Player Player)
+    public void AddPoint(Player Player)
     {
         if (Player == Player.One)
             points_P1++;

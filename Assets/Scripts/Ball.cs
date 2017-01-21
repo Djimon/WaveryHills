@@ -9,37 +9,45 @@ public class Ball : MonoBehaviour {
 	
 	private Vector3 paddleToBallVector;
 	private bool klicked = false;
+    private SpriteRenderer BallSprite;
 
-    public float StartSpeed = 7F;
+    public float StartSpeed = 7f;
     Vector2 StartDirection;
 
     void Awake()
     {
         klicked = false;
         StartDirection = Vector2.up;
+        BallSprite = gameObject.GetComponent<SpriteRenderer>();
     }
 	// Use this for initialization
 	void Start () 
-	{
+	{        
         Reset();
-        
         //paddleToBallVector = this.transform.position - StartPos;
-		//print(paddleToBallVector);;
-	}
+        //print(paddleToBallVector);;
+    }
 
     public void Reset()
     {
         klicked = false;
         StartDirection = Vector2.up;
-        paddle = GameManager.GetOwner().GetComponent<Paddle>();
+        paddle = GameManager.Instance.GetOwner().GetComponent<Paddle>();
         this.transform.position = paddle.transform.position + new Vector3(0f, 1f, 0f);
         paddleToBallVector = this.transform.position - paddle.transform.position;
+        BallSprite.color = GameManager.Instance.SendColor();
     }
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
+        // Collision with paddle -> Changes the owner and Color of the Disc
         if (col.gameObject.name.Contains("Player"))
-            GameManager.ChangeOwner();
+        {
+            GameManager.Instance.ChangeOwner();
+            BallSprite.color = GameManager.Instance.SendColor();
+        }
+           
+
 	}
 
     // Update is called once per frame
@@ -55,7 +63,7 @@ public class Ball : MonoBehaviour {
             //	this.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,12f);	// set y to a value, not a magic number			
             //}
 
-            int currentControllerIndex = GameManager.GetControler();
+            int currentControllerIndex = GameManager.Instance.GetControler();
 
             StartDirection.x += 0.1F * InputController.BallTargeting(currentControllerIndex);
             StartDirection.x = Mathf.Clamp(StartDirection.x, -0.8F, 0.8F);
@@ -66,6 +74,8 @@ public class Ball : MonoBehaviour {
             {
                 klicked = true;
                 this.GetComponent<Rigidbody2D>().velocity = StartSpeed * StartDirection;
+
+                GameManager.Instance.ChangeOwner();
             }
         }
 			
