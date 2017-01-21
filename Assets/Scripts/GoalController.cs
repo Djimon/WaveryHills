@@ -12,19 +12,22 @@ public class GoalController : MonoBehaviour {
 
     Vector3 initialBallPosition;
 
-
+    void Awake()
+    {
+        Debug.LogError("?: " + Light.name);
+    }
 	// Use this for initialization
 	void Start () {
         initialBallPosition = SoccerBall.transform.position;
-        Debug.LogError("?: " + Light.name);
+        
 	}
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         Light.SetActive(true);
         Invoke("LightOut", 0.5f);
         GameManager.Instance.AddPoint(Player);
-
+        GameManager.Instance.UpdateScore();
         // Reset Ball position
         SoccerBall.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
         SoccerBall.transform.position = initialBallPosition;       

@@ -42,6 +42,11 @@ public class GameManager : MonoBehaviour {
 
     private Animator SlotMachine, SHLeft, SHRight;
     // Use this for initialization
+    void Awake()
+    {
+
+    }
+
     void Start ()
     {
         Instance = this;
@@ -61,13 +66,14 @@ public class GameManager : MonoBehaviour {
         SHRight      = GameObject.Find("SHRight").GetComponent<Animator>();
 
         GameObject.Instantiate(ball);
+        UpdateScore();
     }
 
     public Color SendColor()
     {
-        if (Controller == 1)
+        if (Controller == 2)
             return new Color(0f, 255f, 200f);
-        else if (Controller == 2)
+        else if (Controller == 1)
             return new Color(255f, 152, 0f);
         else return new Color(255f,255f,255f);
     }
@@ -98,7 +104,6 @@ public class GameManager : MonoBehaviour {
 
     private void UpdateOwner()
     {
-        Debug.Log("UpdateOwner");
         SpriteRenderer last = lastOwner.GetComponent<SpriteRenderer>();
         SpriteRenderer know = currentOwner.GetComponent<SpriteRenderer>();
         last.color = new Color(last.color.r, last.color.g, last.color.b, 0.3f);
