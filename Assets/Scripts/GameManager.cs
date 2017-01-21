@@ -38,6 +38,10 @@ public class GameManager : MonoBehaviour {
         GameObject.Instantiate(ball);
     }
 
+    /// <summary>
+    /// returns the current active Player (Paddle)
+    /// </summary>
+    /// <returns>GameObject</returns>
     public static GameObject GetOwner()
     {
         return currentOwner;
@@ -58,8 +62,10 @@ public class GameManager : MonoBehaviour {
 
     private static void UpdateView()
     {
-        lastOwner.SetActive(false);
-        currentOwner.SetActive(true);
+        SpriteRenderer last = lastOwner.GetComponent<SpriteRenderer>();
+        SpriteRenderer know = lastOwner.GetComponent<SpriteRenderer>();
+        last.color = new Color(last.color.r, last.color.g, last.color.b, 0.3f);
+        know.color = new Color(know.color.r, know.color.g, know.color.b, 1f);
     }
 
     // Update is called once per frame

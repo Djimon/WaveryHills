@@ -17,8 +17,7 @@ public class Paddle : MonoBehaviour {
     }
 	
 	private void MoveWithMouse()
-	{
-		
+	{		
 		float mousePosInBlocks;
 		mousePosInBlocks = Input.mousePosition.x /Screen.width *16;  // 16=gamesize (blocks)
 		//print (mousePosInBlocks); //left: 0  middle: 8  right: 16
@@ -30,18 +29,18 @@ public class Paddle : MonoBehaviour {
     {
         if (No == 1)
         {
-            float joystickPos = Input.GetAxis("P1_XAxis") / Screen.width * 16;
+            float joystickPos = Input.GetAxis("P1_XAxis");
             paddlePos.x = Mathf.Clamp(joystickPos, 0.5f,15.5f);
             this.transform.position = paddlePos;
         }
         else if (No == 2)
         {
-            float joystickPos = Input.GetAxis("P2_XAxis") / Screen.width * 16;
+            float joystickPos = Input.GetAxis("P2_XAxis");
             paddlePos.x = Mathf.Clamp(joystickPos, 0.5f, 15.5f);
             this.transform.position = paddlePos;
         }
         else
-            Debug.Log("Please implement Gamepad-controller");
+            Debug.Log("Please implement Gamepad-Controller");
     }
 
     private void MoveWithKeyboard(int No)
