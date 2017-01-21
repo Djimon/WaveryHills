@@ -28,20 +28,10 @@ public class Paddle : MonoBehaviour {
 
     private void MoveWithGamePad(int No)
     {
-        if (No == 1)
-        {
-            float joystickPos = Input.GetAxis("P1_XAxis") / Screen.width * 16;
-            paddlePos.x = Mathf.Clamp(joystickPos, 0.5f,15.5f);
-            this.transform.position = paddlePos;
-        }
-        else if (No == 2)
-        {
-            float joystickPos = Input.GetAxis("P2_XAxis") / Screen.width * 16;
-            paddlePos.x = Mathf.Clamp(joystickPos, 0.5f, 15.5f);
-            this.transform.position = paddlePos;
-        }
-        else
-            Debug.Log("Please implement Gamepad-controller");
+        float joystickPos = Input.GetAxis("P" + No + "_XAxis");
+        paddlePos.x += joystickPos;
+        paddlePos.x = Mathf.Clamp(paddlePos.x, 0.5f, 15.5f);
+        this.transform.position = paddlePos;
     }
 
     private void MoveWithKeyboard(int No)
@@ -71,7 +61,7 @@ public class Paddle : MonoBehaviour {
 	void Update () 
 	{
         MoveWithGamePad(Controller);
-        MoveWithMouse();
+        //MoveWithMouse();
         if (Input.GetButton("P1_XButton"))
         {
             Debug.Log("PowerUp Player 1");
