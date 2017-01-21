@@ -8,23 +8,22 @@ public class GoalController : MonoBehaviour {
 
     public GameObject SoccerBall;
     public GameManager.Player Player;
-    public GameObject Light;
+    //public GameObject Light;
 
     Vector3 initialBallPosition;
 
     void Awake()
     {
-        Debug.LogError("?: " + Light.name);
+        //Debug.LogError("?: " + Light.name);
     }
 	// Use this for initialization
 	void Start () {
         initialBallPosition = SoccerBall.transform.position;
-        
 	}
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Light.SetActive(true);
+        //Light.SetActive(true);
         Invoke("LightOut", 0.5f);
         GameManager.Instance.AddPoint(Player);
         GameManager.Instance.UpdateScore();
@@ -35,7 +34,7 @@ public class GoalController : MonoBehaviour {
 
     private void LightOut()
     {
-        Light.SetActive(false);
+        //Light.SetActive(false);
     }
 
     // Update is called once per frame
