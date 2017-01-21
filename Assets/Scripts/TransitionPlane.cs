@@ -7,9 +7,11 @@ public class TransitionPlane : MonoBehaviour {
     [SerializeField]
     WaveManager waveManager;
 
+    Collider2D collider;
+
 	// Use this for initialization
 	void Start () {
-		
+        collider = GetComponent<Collider2D>();
 	}
 	
 	// Update is called once per frame
@@ -19,7 +21,7 @@ public class TransitionPlane : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.position.y < transform.position.y)
+        if (collision.transform.position.y < transform.position.y + collider.offset.y)
         {
             waveManager.AddWave(collision.transform.position.x);
         }

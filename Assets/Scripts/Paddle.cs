@@ -8,6 +8,9 @@ public class Paddle : MonoBehaviour {
 	//private Ball ball;
     public int Controller;
     Vector3 paddlePos;
+
+    public float MaxMoveSpeed = 1;
+
     // Use this for initialization
     void Start () 
 	{
@@ -29,7 +32,7 @@ public class Paddle : MonoBehaviour {
     private void MoveWithGamePad(int No)
     {
         float joystickPos = Input.GetAxis("P" + No + "_XAxis");
-        paddlePos.x += joystickPos;
+        paddlePos.x += joystickPos * MaxMoveSpeed * Time.deltaTime;
         paddlePos.x = Mathf.Clamp(paddlePos.x, 0.5f, 15.5f);
         this.transform.position = paddlePos;
     }
