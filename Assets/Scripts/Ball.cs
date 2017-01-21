@@ -32,7 +32,7 @@ public class Ball : MonoBehaviour {
     {
         klicked = false;
         StartDirection = Vector2.up;
-        paddle = GameManager.GetOwner().GetComponent<Paddle>();
+        paddle = GameManager.Instance.GetOwner().GetComponent<Paddle>();
         this.transform.position = paddle.transform.position + new Vector3(0f, 1f, 0f);
         paddleToBallVector = this.transform.position - paddle.transform.position;
         BallSprite.color = GameManager.SendColor();
@@ -43,8 +43,8 @@ public class Ball : MonoBehaviour {
         // Collision with paddle -> Changes the owner and Color of the Disc
         if (col.gameObject.name.Contains("Player"))
         {
-            GameManager.ChangeOwner();
-            BallSprite.color = GameManager.SendColor();
+            GameManager.Instance.ChangeOwner();
+            BallSprite.color = GameManager.Instance.SendColor();
         }
            
 
@@ -63,7 +63,7 @@ public class Ball : MonoBehaviour {
             //	this.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,12f);	// set y to a value, not a magic number			
             //}
 
-            int currentControllerIndex = GameManager.GetControler();
+            int currentControllerIndex = GameManager.Instance.GetControler();
 
             StartDirection.x += 0.1F * InputController.BallTargeting(currentControllerIndex);
             StartDirection.x = Mathf.Clamp(StartDirection.x, -0.8F, 0.8F);
@@ -74,6 +74,8 @@ public class Ball : MonoBehaviour {
             {
                 klicked = true;
                 this.GetComponent<Rigidbody2D>().velocity = StartSpeed * StartDirection;
+
+                GameManager.Instance.ChangeOwner();
             }
         }
 			
