@@ -93,28 +93,24 @@ public class GameManager : MonoBehaviour {
         currentOwner = Temp;
         UpdateOwner();  
         Controller = currentOwner.GetComponent<Paddle>().Controller;
-        //StartCoroutine(ToggleColliders(lastOwner, currentOwner));
-    }
-
-    IEnumerator ToggleColliders(GameObject collider1, GameObject collider2)
-    {
-        yield return new WaitForSeconds(0.1F);
-
-        Collider2D collider;
-
-        collider = collider1.GetComponent<Collider2D>();
-        collider.enabled = !collider.enabled;
-
-        collider = collider2.GetComponent<Collider2D>();
-        collider.enabled = !collider.enabled;
+        StartCoroutine(ToggleColliders(currentOwner.GetComponent<Collider2D>(), lastOwner.GetComponent<Collider2D>()));
     }
 
     private void UpdateOwner()
     {
+        Debug.Log("UpdateOwner");
         SpriteRenderer last = lastOwner.GetComponent<SpriteRenderer>();
         SpriteRenderer know = currentOwner.GetComponent<SpriteRenderer>();
         last.color = new Color(last.color.r, last.color.g, last.color.b, 0.3f);
         know.color = new Color(know.color.r, know.color.g, know.color.b, 1f);
+    }
+
+    IEnumerator ToggleColliders(Collider2D enableCollider, Collider2D disableCollider)
+    {
+        yield return new WaitForSeconds(0.1F);
+
+        enableCollider.enabled = true;
+        disableCollider.enabled = false;
     }
 
     // Update is called once per frame

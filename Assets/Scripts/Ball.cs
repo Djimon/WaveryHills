@@ -73,6 +73,8 @@ public class Ball : MonoBehaviour {
             {
                 klicked = true;
                 this.GetComponent<Rigidbody2D>().velocity = StartSpeed * StartDirection;
+
+                GameManager.Instance.ChangeOwner();
             }
         }
 			

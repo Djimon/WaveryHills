@@ -43,22 +43,7 @@ public class Paddle : MonoBehaviour {
 	void Update () 
 	{
         Move(InputController.PaddleMovement(Controller));
-
-        // other stuff
-        if (Input.GetButton("P1_XButton"))
-        {
-            Debug.Log("PowerUp Player 1");
-        }
-
-        if (Input.GetButton("P2_XButton"))
-        {
-            Debug.Log("PowerUp Player 2");
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("PowerUp Keyboard");
-        }
-        //AutoPlay(); // Debug-Modus			
+	
     }
 
 
