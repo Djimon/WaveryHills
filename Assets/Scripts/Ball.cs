@@ -52,12 +52,12 @@ public class Ball : MonoBehaviour {
 
             int currentControllerIndex = GameManager.GetControler();
 
-            StartDirection.x += 0.1F * Input.GetAxis("P" + currentControllerIndex + "_TargetingAxis");
+            StartDirection.x += 0.1F * InputController.BallTargeting(currentControllerIndex);
             StartDirection.x = Mathf.Clamp(StartDirection.x, -0.8F, 0.8F);
 
             StartDirection.Normalize();
-            
-            if(Input.GetButton("P" + currentControllerIndex + "_XButton"))
+
+            if (InputController.Shoot(currentControllerIndex))
             {
                 klicked = true;
                 this.GetComponent<Rigidbody2D>().velocity = StartSpeed * StartDirection;
