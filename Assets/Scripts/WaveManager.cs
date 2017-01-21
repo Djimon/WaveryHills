@@ -37,7 +37,7 @@ public class WaveManager : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0))
         {
-            AddWave(center, _BaseWidth, _BaseAmplitude, _BaseDecreasePerSecond, _BaseSpreadSpeed);
+            AddWave(center);
         }
 
         UpdateWaves();
