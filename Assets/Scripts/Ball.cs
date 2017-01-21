@@ -9,8 +9,9 @@ public class Ball : MonoBehaviour {
 	
 	private Vector3 paddleToBallVector;
 	private bool klicked = false;
+    private SpriteRenderer BallSprite;
 
-    public float StartSpeed = 7F;
+    public float StartSpeed = 7f;
     Vector2 StartDirection;
 
     void Awake()
@@ -26,7 +27,7 @@ public class Ball : MonoBehaviour {
         paddle = GameManager.GetOwner().GetComponent<Paddle>();
         this.transform.position = paddle.transform.position + new Vector3(0f,1f,0f);
         paddleToBallVector = this.transform.position - paddle.transform.position; //DebugModus
-        
+        BallSprite = gameObject.GetComponent<SpriteRenderer>();
         //paddleToBallVector = this.transform.position - StartPos;
 		//print(paddleToBallVector);;
 	}
@@ -34,7 +35,12 @@ public class Ball : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col)
 	{
         if (col.gameObject.name.Contains("Player"))
+        {
             GameManager.ChangeOwner();
+            BallSprite.color = GameManager.SendColor();
+        }
+           
+
 	}
 
     // Update is called once per frame

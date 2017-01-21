@@ -20,7 +20,6 @@ public class GoalController : MonoBehaviour {
         // Resett Ballposistion
         Light.SetActive(true);
         Invoke("LightOut", 0.5f);
-        Debug.LogError("anim set true");
         GameManager.AddPoint(Player);
         GameManager.UpdateScore();
         SoccerBall.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
