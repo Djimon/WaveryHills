@@ -20,7 +20,8 @@ public class Slotholder : MonoBehaviour {
         //gameObject.transform.position = new Vector3(0f,4.6f,0f);  
         Instantiate(left).transform.position = transform.position - new Vector3(distance / 2, 0f);
         Instantiate(right).transform.position = transform.position + new Vector3(distance / 2, 0f);
-        
+        left.transform.parent = transform;
+        right.transform.parent = transform;
 
     }
     private void UpdateView()

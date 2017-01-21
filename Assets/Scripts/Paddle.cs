@@ -36,7 +36,7 @@ public class Paddle : MonoBehaviour {
 	
 	private void OnCollisionEnter2D(Collision2D col) 
 	{
-        Debug.Log("bounce bounce");
+        //Debug.Log("bounce bounce");
 	}
 	
 	// Update is called once per frame

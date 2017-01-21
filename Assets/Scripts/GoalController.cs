@@ -23,7 +23,6 @@ public class GoalController : MonoBehaviour {
     {
         Light.SetActive(true);
         Invoke("LightOut", 0.5f);
-        Debug.LogError("anim set true");
         GameManager.AddPoint(Player);
 
         // Reset Ball position
