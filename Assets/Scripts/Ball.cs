@@ -39,6 +39,7 @@ public class Ball : MonoBehaviour {
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
+        // Collision with paddle -> Changes the owner and Color of the Disc
         if (col.gameObject.name.Contains("Player"))
         {
             GameManager.ChangeOwner();
