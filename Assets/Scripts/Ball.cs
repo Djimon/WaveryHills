@@ -10,15 +10,20 @@ public class Ball : MonoBehaviour {
 	private Vector3 paddleToBallVector;
 	private bool klicked = false;
 
+    public float StartSpeed = 7F;
+    Vector2 StartDirection;
+
     void Awake()
     {
         klicked = false;
+        StartDirection = Vector2.up;
     }
 	// Use this for initialization
 	void Start () 
 	{
         klicked = false;
-		paddle = GameObject.FindObjectOfType<Paddle>();
+        StartDirection = Vector2.up;
+        paddle = GameManager.GetOwner().GetComponent<Paddle>();
         this.transform.position = paddle.transform.position + new Vector3(0f,1f,0f);
         paddleToBallVector = this.transform.position - paddle.transform.position; //DebugModus
         
@@ -37,29 +42,35 @@ public class Ball : MonoBehaviour {
 	{		
 		if (!klicked)
 		{
-			this.transform.position = paddle.transform.position + paddleToBallVector; 				
-		
-			//if (Input.GetMouseButtonDown(0))
-			//{
-			//	klicked = true;
-			//	this.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,12f);	// set y to a value, not a magic number			
-			//}
+			this.transform.position = paddle.transform.position + paddleToBallVector;
 
-            if (GameManager.GetControler() == 1 && Input.GetButton("P1_XButton"))
-            { 
-                klicked = true;
-                this.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 12f);
+            //if (Input.GetMouseButtonDown(0))
+            //{
+            //	klicked = true;
+            //	this.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,12f);	// set y to a value, not a magic number			
+            //}
 
-            }
-            else if (GameManager.GetControler() == 2 && Input.GetButton("P2_XButton"))
+            int currentControllerIndex = GameManager.GetControler();
+
+            StartDirection.x += 0.1F * Input.GetAxis("P" + currentControllerIndex + "_TargetingAxis");
+            StartDirection.x = Mathf.Clamp(StartDirection.x, -0.8F, 0.8F);
+
+            StartDirection.Normalize();
+            
+            if(Input.GetButton("P" + currentControllerIndex + "_XButton"))
             {
                 klicked = true;
-                this.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 12f);
-            }              
-            else
-                Debug.Log("Please implement Gamepad-controller");
+                this.GetComponent<Rigidbody2D>().velocity = StartSpeed * StartDirection;
+            }
         }
 			
 	}
 
+    void OnDrawGizmos()
+    {
+        if (!klicked)
+        {
+            Gizmos.DrawLine(transform.position, transform.position + (Vector3)StartDirection);
+        }
+    }
 }
