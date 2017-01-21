@@ -6,7 +6,7 @@ public static class InputController {
 
     public static float PaddleMovement(int playerIndex)
     {
-        if(Input.GetJoystickNames()[playerIndex - 1] != "")
+        if(playerIndex < Input.GetJoystickNames().Length && Input.GetJoystickNames()[playerIndex - 1] != "")
         {
             return Input.GetAxis("P" + playerIndex + "_XAxis");
         }
@@ -36,7 +36,7 @@ public static class InputController {
 
     public static float BallTargeting(int playerIndex)
     {
-        if (Input.GetJoystickNames()[playerIndex - 1] != "")
+        if (playerIndex < Input.GetJoystickNames().Length && Input.GetJoystickNames()[playerIndex - 1] != "")
         {
             return Input.GetAxis("P" + playerIndex + "_TargetingAxis");
         }
@@ -66,7 +66,7 @@ public static class InputController {
 
     public static bool Shoot(int playerIndex)
     {
-        if (Input.GetJoystickNames()[playerIndex - 1] != "")
+        if (playerIndex < Input.GetJoystickNames().Length && Input.GetJoystickNames()[playerIndex - 1] != "")
         {
             return Input.GetButton("P" + playerIndex + "_XButton");
         }
