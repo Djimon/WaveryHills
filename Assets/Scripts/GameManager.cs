@@ -62,9 +62,9 @@ public class GameManager : MonoBehaviour {
 
     public static Color SendColor()
     {
-        if (Controller == 2)
+        if (Controller == 1)
             return new Color(0f, 255f, 200f);
-        else if (Controller == 1)
+        else if (Controller == 2)
             return new Color(255f, 152, 0f);
         else return new Color(255f,255f,255f);
     }

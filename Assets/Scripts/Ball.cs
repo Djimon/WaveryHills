@@ -18,15 +18,15 @@ public class Ball : MonoBehaviour {
     {
         klicked = false;
         StartDirection = Vector2.up;
+        BallSprite = gameObject.GetComponent<SpriteRenderer>();
     }
 	// Use this for initialization
 	void Start () 
-	{
+	{        
         Reset();
-        BallSprite = gameObject.GetComponent<SpriteRenderer>();
         //paddleToBallVector = this.transform.position - StartPos;
-		//print(paddleToBallVector);;
-	}
+        //print(paddleToBallVector);;
+    }
 
     public void Reset()
     {
@@ -35,6 +35,7 @@ public class Ball : MonoBehaviour {
         paddle = GameManager.GetOwner().GetComponent<Paddle>();
         this.transform.position = paddle.transform.position + new Vector3(0f, 1f, 0f);
         paddleToBallVector = this.transform.position - paddle.transform.position;
+        BallSprite.color = GameManager.SendColor();
     }
 	
 	void OnCollisionEnter2D(Collision2D col)

@@ -22,7 +22,7 @@ public class Paddle : MonoBehaviour {
     private void Move(float xMovementInput)
     {
         paddlePos.x += xMovementInput * MaxMoveSpeed * Time.deltaTime;
-        paddlePos.x = Mathf.Clamp(paddlePos.x, 0.5f, 15.5f);
+        paddlePos.x = Mathf.Clamp(paddlePos.x, -10f, 10f);
         this.transform.position = paddlePos;
     }
 
