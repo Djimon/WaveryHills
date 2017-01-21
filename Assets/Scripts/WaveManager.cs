@@ -35,11 +35,7 @@ public class WaveManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            AddWave(center);
-        }
-
+        
         UpdateWaves();
 
         Vector2 ballPosition = Ball.transform.position;

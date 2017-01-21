@@ -39,11 +39,11 @@ public class Ball : MonoBehaviour {
 		{
 			this.transform.position = paddle.transform.position + paddleToBallVector; 				
 		
-			if (Input.GetMouseButtonDown(0))
-			{
-				klicked = true;
-				this.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,12f);	// set y to a value, not a magic number			
-			}
+			//if (Input.GetMouseButtonDown(0))
+			//{
+			//	klicked = true;
+			//	this.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,12f);	// set y to a value, not a magic number			
+			//}
 
             if (GameManager.GetControler() == 1 && Input.GetButton("P1_XButton"))
             { 
