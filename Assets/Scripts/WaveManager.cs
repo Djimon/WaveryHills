@@ -43,8 +43,9 @@ public class WaveManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        
         UpdateWaves();
+
+        UpdateWaveColor();
 
         Vector2 ballPosition = Ball.transform.position;
         if (ballPosition.y < SampleAllWavesAt(Ball.transform.position.x))
@@ -67,7 +68,6 @@ public class WaveManager : MonoBehaviour {
             Ball.AddForce(_PushForce * (new Vector2(xValues[minIndex], yValues[minIndex]) - ballPosition) / minDist);
             
         }
-
     }
 
     private void UpdateWaves()
@@ -91,21 +91,46 @@ public class WaveManager : MonoBehaviour {
         DrawWave();
     }
 
+    private void UpdateWaveColor()
+    {
+        List<GradientColorKey> colors = new List<GradientColorKey>();
+        List<GradientAlphaKey> alphas = new List<GradientAlphaKey>();
+
+        foreach(Wave w in Waves)
+        {
+            if (colors.Count >= 8)
+                break;
+            float t = normalizedPosition(w.Center);
+            colors.Add(new GradientColorKey(w.Color, t));
+            alphas.Add(new GradientAlphaKey(1.0F, t));
+        }
+        Gradient g = new Gradient();
+        g.SetKeys(colors.ToArray(), alphas.ToArray());
+        lineRenderer.colorGradient = g;
+    }
+
+    float normalizedPosition(float position)
+    {
+        float totalLength = RightBorder - LeftBorder;
+        return (position - LeftBorder) / totalLength;
+    }
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="center">center of the newly created wave</param>
+    /// <param name="color">color of the wave</param>
     /// <param name="widthFactor">modifier for the width of a wave. Multiplies the baseWidth of a Wave with widthFactor</param>
     /// <param name="amplitudeFactor">modifier for the amplitude of a wave. Multiplies the baseAmplitude of a Wave with amplitudeFactor</param>
     /// <param name="decreasePerSecondFactor">modifier for the decreasePerSecond of a wave. Multiplies the baseDecreasePerSecond of a Wave with decreasePerSecondFactor</param>
     /// <param name="spreadSpeedFactor">modifier for the spreadSpeed of a wave. Multiplies the baseSpreadSpeed of a Wave with spreadSpeedFactor</param>
-    public void AddWave(float center, float widthFactor = 1F, float amplitudeFactor = 1F, float decreasePerSecondFactor = 1F, float spreadSpeedFactor = 1F)
+    public void AddWave(float center, Color color, float widthFactor = 1F, float amplitudeFactor = 1F, float decreasePerSecondFactor = 1F, float spreadSpeedFactor = 1F)
     {
         //part of the wave that goes to the right
-        Waves.Add(new Wave(center, _BaseWidth * widthFactor, _BaseAmplitude * 0.5F * amplitudeFactor, _BaseDecreasePerSecond * decreasePerSecondFactor, _BaseSpreadSpeed * spreadSpeedFactor));
+        Waves.Add(new Wave(center, color, _BaseWidth * widthFactor, _BaseAmplitude * 0.5F * amplitudeFactor, _BaseDecreasePerSecond * decreasePerSecondFactor, _BaseSpreadSpeed * spreadSpeedFactor));
 
         //part of the wave that goes to the left
-        Waves.Add(new Wave(center, _BaseWidth * widthFactor, _BaseAmplitude * 0.5F * amplitudeFactor, _BaseDecreasePerSecond * decreasePerSecondFactor, -_BaseSpreadSpeed * spreadSpeedFactor));
+        Waves.Add(new Wave(center, color, _BaseWidth * widthFactor, _BaseAmplitude * 0.5F * amplitudeFactor, _BaseDecreasePerSecond * decreasePerSecondFactor, -_BaseSpreadSpeed * spreadSpeedFactor));
     }
     
     float[] GetSamples(float minX, float maxX, int numSamples)

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Wave {
 
-    public float Center { get; set; }
-    public float HalfWidth { get; set; }
+    public float Center { get; private set; }
+    public Color Color { get; private set; }
+    public float HalfWidth { get; private set; }
     public float Amplitude { get; private set; }
-    public float DecreasePerSecond { get; set; }
-    public float SpreadSpeed { get; set; }
+    public float DecreasePerSecond { get; private set; }
+    public float SpreadSpeed { get; private set; }
 
-    public Wave(float center, float width, float amplitude, float decreasePerSecond, float spreadSpeed)
+    public Wave(float center, Color color, float width, float amplitude, float decreasePerSecond, float spreadSpeed)
     {
         this.Center = center;
+        this.Color = color;
         this.HalfWidth = width * 0.5F;
         this.Amplitude = amplitude;
         this.DecreasePerSecond = decreasePerSecond;
