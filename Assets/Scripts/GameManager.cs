@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,6 @@ public class GameManager : MonoBehaviour {
      * Manage PowerUp -> Schicke an Owner
      * Zähle Punkte
      */
-
     enum PowerUps
     {
         BigBall, //Balll über der Welle wir größer
@@ -20,15 +20,52 @@ public class GameManager : MonoBehaviour {
         x3, // 10 sek zählt jedes Tor 3fach
         Tsunami // Amplitude höher
     }
-	// Use this for initialization
-	void Start ()
+
+    static GameObject currentOwner;
+    static GameObject lastOwner;
+    static int scoreP1;
+    static int scoreP2;
+    static int Controller;
+
+    public Ball ball;
+    // Use this for initialization
+    void Start ()
     {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        lastOwner = GameObject.Find("Player2");
+        currentOwner = GameObject.Find("Player1");
+        UpdateView();
+        Controller = currentOwner.GetComponent<Paddle>().Controller;
+        GameObject.Instantiate(ball);
+    }
+
+    public static GameObject GetOwner()
     {
+        return currentOwner;
+    }
+
+    public static int GetControler()
+    {
+        return Controller;
+    }
+    public static void ChangeOwner()
+    {
+        GameObject Temp = lastOwner;
+        lastOwner = currentOwner;
+        currentOwner = Temp;
+        UpdateView();  
+        Controller = currentOwner.GetComponent<Paddle>().Controller; 
+    }
+
+    private static void UpdateView()
+    {
+        lastOwner.SetActive(false);
+        currentOwner.SetActive(true);
+    }
+
+    // Update is called once per frame
+    void Update ()
+    { 
+        
 		
 	}
 }

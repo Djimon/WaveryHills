@@ -8,6 +8,10 @@ public class SlotRotator : MonoBehaviour {
     const float TimeToElapse = 0.2f;
     float elapsedTime = TimeToElapse;
 
+    /* Vorschlag:
+     * Die Rotationsgeschwindigkeit der einzelnen Slots mit Random.Range unterschiedlich schnell machen
+     */
+
 	// Use this for initialization
 	void Start () {
 		

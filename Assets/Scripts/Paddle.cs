@@ -5,14 +5,14 @@ using System;
 public class Paddle : MonoBehaviour {
 
 	public bool autoPlay = false;
-	private Ball ball;
+	//private Ball ball;
     public int Controller;
     Vector3 paddlePos;
     // Use this for initialization
     void Start () 
 	{
-		ball = GameObject.FindObjectOfType<Ball>();
-        paddlePos = new Vector3(8f, 0.5f, 0f);
+        //ball = GameObject.FindObjectOfType<Ball>();
+        paddlePos = this.transform.position;
         //print(ball);	
     }
 	
@@ -54,18 +54,17 @@ public class Paddle : MonoBehaviour {
             Debug.Log("Please implement Keyboard-controller");
     }
 
-    private void AutoPlay()
-	{
-		Vector3 ballPos = ball.transform.position;
-		paddlePos.x = Mathf.Clamp (ballPos.x, 0.5f, 15.5f); //0.5 is half-width of paddle
-		this.transform.position = paddlePos;
+ //   private void AutoPlay()
+	//{
+	//	Vector3 ballPos = ball.transform.position;
+	//	paddlePos.x = Mathf.Clamp (ballPos.x, 0.5f, 15.5f); //0.5 is half-width of paddle
+	//	this.transform.position = paddlePos;
 		
-	}
+	//}
 	
 	private void OnCollisionEnter2D(Collision2D col) 
 	{
-        col.gameObject.GetComponent<Ball>().ChangeOwner(this.gameObject); 
-
+        Debug.Log("bounce bounce");
 	}
 	
 	// Update is called once per frame
@@ -73,12 +72,12 @@ public class Paddle : MonoBehaviour {
 	{
         MoveWithGamePad(Controller);
         MoveWithMouse();
-        if (Input.GetButton("P1_AButton"))
+        if (Input.GetButton("P1_XButton"))
         {
             Debug.Log("PowerUp Player 1");
         }
 
-        if (Input.GetButton("P2_AButton"))
+        if (Input.GetButton("P2_XButton"))
         {
             Debug.Log("PowerUp Player 2");
         }
