@@ -73,13 +73,28 @@ public class GameManager : MonoBehaviour {
     {
         return Controller;
     }
+    
     public static void ChangeOwner()
     {
         GameObject Temp = lastOwner;
         lastOwner = currentOwner;
         currentOwner = Temp;
         UpdateOwner();  
-        Controller = currentOwner.GetComponent<Paddle>().Controller; 
+        Controller = currentOwner.GetComponent<Paddle>().Controller;
+        //StartCoroutine(ToggleColliders(lastOwner, currentOwner));
+    }
+
+    IEnumerator ToggleColliders(GameObject collider1, GameObject collider2)
+    {
+        yield return new WaitForSeconds(0.1F);
+
+        Collider2D collider;
+
+        collider = collider1.GetComponent<Collider2D>();
+        collider.enabled = !collider.enabled;
+
+        collider = collider2.GetComponent<Collider2D>();
+        collider.enabled = !collider.enabled;
     }
 
     private static void UpdateOwner()
