@@ -42,9 +42,26 @@ public class WaveManager : MonoBehaviour {
 
         UpdateWaves();
 
-        if(Ball.transform.position.y < SampleAllWaves(Ball.transform.position.x))
+        Vector2 ballPosition = Ball.transform.position;
+        if (ballPosition.y < SampleAllWavesAt(Ball.transform.position.x))
         {
-            Ball.AddForce(_PushForce * Vector2.up);
+            float[] xValues;
+            float[] yValues = GetSamples(LeftBorder, RightBorder, 500, out xValues);
+            
+            float minDist = float.MaxValue;
+            int minIndex = 0;
+            for (int i = 0; i < yValues.Length; i++)
+            {
+                float distance = Vector2.Distance(ballPosition, new Vector2(xValues[i], yValues[i]));
+                if(distance < minDist)
+                {
+                    minDist = distance;
+                    minIndex = i;
+                }
+            }
+
+            Ball.AddForce(_PushForce * (new Vector2(xValues[minIndex], yValues[minIndex]) - ballPosition) / minDist);
+            
         }
 
     }
@@ -85,8 +102,33 @@ public class WaveManager : MonoBehaviour {
         //part of the wave that goes to the left
         Waves.Add(new Wave(center, _BaseWidth * widthFactor, _BaseAmplitude * 0.5F * amplitudeFactor, _BaseDecreasePerSecond * decreasePerSecondFactor, -_BaseSpreadSpeed * spreadSpeedFactor));
     }
+    
+    float[] GetSamples(float minX, float maxX, int numSamples)
+    {
+        float[] tmp;
+        return GetSamples(minX, maxX, numSamples, out tmp);
+    }
+    /// <summary>
+    /// Gets numSamples points within [minX, maxX)
+    /// </summary>
+    float[] GetSamples(float minX, float maxX, int numSamples, out float[] xValues)
+    {
+        float[] samples = new float[numSamples];
+        xValues = new float[numSamples];
 
-    float SampleAllWaves(float x)
+        float x = minX;
+
+        float stepSize = (maxX - minX) / (float)numSamples;
+        for (int i = 0; i < numSamples; i++)
+        {
+            samples[i] = SampleAllWavesAt(x);
+            xValues[i] = x;
+            x += stepSize;
+        }
+        return samples;
+    }
+
+    float SampleAllWavesAt(float x)
     {
         float result = 0;
         foreach (Wave wave in Waves)
@@ -98,17 +140,14 @@ public class WaveManager : MonoBehaviour {
 
     void OnDrawGizmos()
     {
-        float numSamples = 500;
-        float stepSize = (RightBorder - LeftBorder) / numSamples;
+        int numSamples = 500;
 
-        Vector2 previousSample = new Vector2(LeftBorder, SampleAllWaves(LeftBorder));
-        Vector2 currentSample;
+        float[] xValues;
+        float[] yValues = GetSamples(LeftBorder, RightBorder, numSamples, out xValues);
 
-        for (float x = LeftBorder + stepSize; x <= RightBorder; x += stepSize)
+        for(int i = 0; i < xValues.Length - 1; i++)
         {
-            currentSample = new Vector2(x, SampleAllWaves(x));
-            Gizmos.DrawLine(previousSample, currentSample);
-            previousSample = currentSample;
+            Gizmos.DrawLine(new Vector2(xValues[i], yValues[i]), new Vector2(xValues[i+1], yValues[i+1]));
         }
     }
 }
