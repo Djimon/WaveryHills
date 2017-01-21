@@ -18,10 +18,10 @@ public class LooseCollider : MonoBehaviour {
 	{
         //print ("Trigger"); // detect whether is trigger
         //levelManager.LoadLevel("Lose");
-        Destroy(ball);
-        Debug.Log("Loose: " + GameManager.GetOwner().name);
+        //Destroy(ball);
+        //Debug.Log("Loose: " + GameManager.GetOwner().name);
         GameManager.ChangeOwner();
-        Instantiate(GameManager.ball);   
+        ball.Reset(); 
     }
 
 	void OnCollisionEnter2D(Collision2D collision)

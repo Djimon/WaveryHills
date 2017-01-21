@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class SlotRotator : MonoBehaviour {
 
+    public Vector3 rotationalAxis;
     float rotationFactor = 1000;
-    const float TimeToElapse = 0.2f;
-    float elapsedTime = TimeToElapse;
 
     /* Vorschlag:
      * Die Rotationsgeschwindigkeit der einzelnen Slots mit Random.Range unterschiedlich schnell machen
@@ -19,19 +18,20 @@ public class SlotRotator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        /*
-        elapsedTime -= Time.deltaTime;
-        if (elapsedTime <= 0 && rotationFactor > 0)
-        {
-            rotationFactor -= EaseInExpo(50, Time.deltaTime, 0, 5);
-            elapsedTime = TimeToElapse;
-        }*/
         if (rotationFactor > 0)
             rotationFactor -= EaseInExpo(2, Time.deltaTime, 0, 10);
         else
             rotationFactor = 0;
-        transform.Rotate(0, Time.deltaTime * rotationFactor, 0);
+        transform.Rotate(rotationalAxis.x * Time.deltaTime * rotationFactor, rotationalAxis.y * Time.deltaTime * rotationFactor, rotationalAxis.z * Time.deltaTime * rotationFactor);
 	}
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Ball" && rotationFactor == 0)
+        {
+            rotationFactor = 1000;
+        }
+    }
 
     float EaseInExpo(float delta, float time, float start, float duration)
     {

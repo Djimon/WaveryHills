@@ -5,20 +5,22 @@ using UnityEngine;
 
 public class GoalController : MonoBehaviour {
 
-    public Ball SoccerBall;
-    public int Player;
+    public GameObject SoccerBall;
+    public GameManager.Player Player;
+    Vector3 initialBallPosition;
 	// Use this for initialization
 	void Start () {
-		
+        initialBallPosition = SoccerBall.transform.position;
 	}
 
-    void OnTriggerEnter2D(Collider2D trigger)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        // Resett Ballposistion
+        Debug.Log("GOAL!");
         GameManager.AddPoint(Player);
-        GameManager.UpdateScore();
+        //GameManager.UpdateScore();
+        // Reset Ball position
         SoccerBall.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
-        SoccerBall.GetComponent<Transform>().position = new Vector3(0f,7f,0f);       
+        SoccerBall.transform.position = initialBallPosition;       
     }
     // Update is called once per frame
     void Update () {
