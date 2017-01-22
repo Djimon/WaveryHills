@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour {
     int Controller;
 
     Text scoreP1, scoreP2;
+    public int PointsWinCondition;
     public int points_P1 {get;private set;}
     public int points_P2 { get;private set; }
     public string winner { get; private set; }
@@ -142,9 +143,9 @@ public class GameManager : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        if (points_P1 >= 10)
+        if (points_P1 >= PointsWinCondition)
             Win(Player.One);
-        if (points_P2 >= 10)
+        if (points_P2 >= PointsWinCondition)
             Win(Player.Two);
     }
 
