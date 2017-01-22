@@ -49,12 +49,15 @@ public class Ball : MonoBehaviour {
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
+        GetComponent<AudioSource>().Play();
         // Collision with paddle -> Changes the owner and Color of the Disc
         if (col.gameObject.name.Contains("Player"))
         {
             GameManager.Instance.ChangeOwner();
             BallSprite.color = GameManager.Instance.SendColor(false);
+            col.gameObject.GetComponent<AudioSource>().Play();
         }
+
            
 
 	}
