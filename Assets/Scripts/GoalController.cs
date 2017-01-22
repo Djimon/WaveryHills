@@ -33,6 +33,7 @@ public class GoalController : MonoBehaviour {
             // Reset Ball position
             SoccerBall.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
             SoccerBall.transform.position = initialBallPosition;
+            SoccerBall.GetComponent<Rigidbody2D>().angularVelocity = 0f;
         }
         else if(collision.tag == "ExtraSoccerBall")
         {
