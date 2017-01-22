@@ -137,14 +137,7 @@ public class GameManager : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        if (SHLeft == null)
-        {
-            SHLeft = GameObject.Find("SHLeft(Clone)").GetComponent<Animator>();
-        }
-        if (SHRight == null)
-        {
-            SHRight = GameObject.Find("SHLeft(Clone)").GetComponent<Animator>();
-        }
+
     }
 
     public void UpdateScore()

@@ -23,13 +23,16 @@ public class SlotRotator : MonoBehaviour {
         else
             rotationFactor = 0;
         transform.Rotate(rotationalAxis.x * Time.deltaTime * rotationFactor, rotationalAxis.y * Time.deltaTime * rotationFactor, rotationalAxis.z * Time.deltaTime * rotationFactor);
+        //Debug.LogWarning("SlotRataion.Update with" + rotationFactor);
 	}
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.LogWarning("trigg: "+other.name);
         if (other.gameObject.tag == "Ball" && rotationFactor == 0)
         {
             rotationFactor = 1000;
+            Debug.LogWarning("They Keep on rolling");
         }
     }
 
