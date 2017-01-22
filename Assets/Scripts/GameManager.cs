@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour {
         points_P1    = 0;
         points_P2    = 0;
 
-        SlotMachine  = GameObject.Find("SlotMachine").GetComponent<Animator>();
+        //SlotMachine  = GameObject.Find("SlotMachine").GetComponent<Animator>();
 
         //GameObject.Instantiate(ball);
         UpdateScore();
