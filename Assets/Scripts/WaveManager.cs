@@ -6,8 +6,6 @@ public class WaveManager : MonoBehaviour {
 
     List<Wave> Waves = new List<Wave>();
 
-    public Rigidbody2D Ball;
-
     public float ZeroLevel;
     public float LeftBorder;
     public float RightBorder;
@@ -21,9 +19,6 @@ public class WaveManager : MonoBehaviour {
     float _BaseDecreasePerSecond;
     [SerializeField]
     float _BaseSpreadSpeed;
-
-    [SerializeField]
-    float _PushForce;
 
     LineRenderer lineRenderer;
     const int numSamples = 500;
@@ -41,33 +36,11 @@ public class WaveManager : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
         UpdateWaves();
 
         UpdateWaveColor();
-
-        Vector2 ballPosition = Ball.transform.position;
-        if (ballPosition.y < SampleAllWavesAt(Ball.transform.position.x))
-        {
-            float[] xValues;
-            float[] yValues = GetSamples(LeftBorder, RightBorder, 500, out xValues);
-            
-            float minDist = float.MaxValue;
-            int minIndex = 0;
-            for (int i = 0; i < yValues.Length; i++)
-            {
-                float distance = Vector2.Distance(ballPosition, new Vector2(xValues[i], yValues[i]));
-                if(distance < minDist)
-                {
-                    minDist = distance;
-                    minIndex = i;
-                }
-            }
-
-            Ball.AddForce(_PushForce * (new Vector2(xValues[minIndex], yValues[minIndex]) - ballPosition) / minDist);
-            
-        }
     }
 
     private void UpdateWaves()
@@ -159,7 +132,7 @@ public class WaveManager : MonoBehaviour {
     /// <summary>
     /// Gets numSamples points within [minX, maxX)
     /// </summary>
-    float[] GetSamples(float minX, float maxX, int numSamples, out float[] xValues)
+    public float[] GetSamples(float minX, float maxX, int numSamples, out float[] xValues)
     {
         float[] samples = new float[numSamples];
         xValues = new float[numSamples];
@@ -178,7 +151,7 @@ public class WaveManager : MonoBehaviour {
         return samples;
     }
 
-    float SampleAllWavesAt(float x)
+    public float SampleAllWavesAt(float x)
     {
         float result = 0;
         foreach (Wave wave in Waves)
