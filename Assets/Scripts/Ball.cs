@@ -14,6 +14,9 @@ public class Ball : MonoBehaviour {
     public float StartSpeed = 7f;
     Vector2 StartDirection;
 
+    [SerializeField]
+    private SpriteRenderer targetArrow;
+
     void Awake()
     {
         klicked = false;
@@ -21,8 +24,8 @@ public class Ball : MonoBehaviour {
         BallSprite = gameObject.GetComponent<SpriteRenderer>();
     }
 	// Use this for initialization
-	void Start () 
-	{        
+	void Start ()
+    { 
         Reset();
         //paddleToBallVector = this.transform.position - StartPos;
         //print(paddleToBallVector);;
@@ -36,6 +39,9 @@ public class Ball : MonoBehaviour {
         this.transform.position = paddle.transform.position + new Vector3(0f, 1f, 0f);
         paddleToBallVector = this.transform.position - paddle.transform.position;
         BallSprite.color = GameManager.Instance.SendColor();
+
+        targetArrow.enabled = true;
+        targetArrow.color = BallSprite.color;
 
         int currentControllerIndex = GameManager.Instance.GetControler();
         ControlVisualizer.Instance.show(currentControllerIndex, InputController.GetInputDevice(currentControllerIndex));
@@ -73,6 +79,8 @@ public class Ball : MonoBehaviour {
             StartDirection.x = Mathf.Clamp(StartDirection.x, -0.8F, 0.8F);
 
             StartDirection.Normalize();
+            
+            targetArrow.transform.up = StartDirection;
 
             if (InputController.Shoot(currentControllerIndex))
             {
@@ -80,6 +88,8 @@ public class Ball : MonoBehaviour {
                 this.GetComponent<Rigidbody2D>().velocity = StartSpeed * StartDirection;
 
                 GameManager.Instance.ChangeOwner();
+
+                targetArrow.enabled = false;
             }
         }
 			
