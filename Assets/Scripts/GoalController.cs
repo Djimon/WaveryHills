@@ -8,7 +8,7 @@ public class GoalController : MonoBehaviour {
 
     public GameObject SoccerBall;
     public GameManager.Player Player;
-    //public GameObject Light;
+    public GameObject Light;
 
     Vector3 initialBallPosition;
 
@@ -23,8 +23,9 @@ public class GoalController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        //Light.SetActive(true);
-        Invoke("LightOut", 0.5f);
+        gameObject.GetComponent<AudioSource>().Play();
+        Light.SetActive(true);
+        Invoke("LightOut", 0.2f);
         GameManager.Instance.AddPoint(Player);
         GameManager.Instance.UpdateScore();
         // Reset Ball position
@@ -34,7 +35,7 @@ public class GoalController : MonoBehaviour {
 
     private void LightOut()
     {
-        //Light.SetActive(false);
+        Light.SetActive(false);
     }
 
     // Update is called once per frame
