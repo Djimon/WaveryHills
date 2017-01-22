@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,17 +64,34 @@ public class GameManager : MonoBehaviour {
 
         SlotMachine  = GameObject.Find("SlotMachine").GetComponent<Animator>();
 
-        GameObject.Instantiate(ball);
+        //GameObject.Instantiate(ball);
         UpdateScore();
     }
 
-    public Color SendColor()
+    /// <summary>
+    /// Sends the color of the current Paddle when true or color of last Paddle when false
+    /// </summary>
+    /// <param name="current">curront or last</param>
+    /// <returns></returns>
+    public Color SendColor(bool current)
     {
-        if (Controller == 2)
-            return new Color(0f, 255f, 200f);
-        else if (Controller == 1)
-            return new Color(255f, 152, 0f);
-        else return new Color(255f,255f,255f);
+        if (current)
+        {
+            if (Controller == 1)
+                return new Color(0f, 255f, 200f);
+            else if (Controller == 2)
+                return new Color(255f, 152, 0f);
+            else return new Color(255f, 255f, 255f);
+        }
+        else
+        {
+            if (Controller == 2)
+                return new Color(0f, 255f, 200f);
+            else if (Controller == 1)
+                return new Color(255f, 152, 0f);
+            else return new Color(255f, 255f, 255f);
+        }
+
     }
 
     /// <summary>
@@ -142,4 +160,13 @@ public class GameManager : MonoBehaviour {
         if (Player == Player.Two)
             points_P2++;        
     }
+
+    public string GetCurrentMethod()
+    {
+        StackTrace st = new StackTrace();
+        StackFrame sf = st.GetFrame(1);
+
+        return sf.GetMethod().Name;
+    }
+
 }

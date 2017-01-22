@@ -23,7 +23,7 @@ public class TransitionPlane : MonoBehaviour {
     {
         if (collision.transform.position.y < transform.position.y + collider.offset.y)
         {
-            waveManager.AddWave(collision.transform.position.x, GameManager.Instance.SendColor());
+            waveManager.AddWave(collision.transform.position.x, GameManager.Instance.SendColor(false));
         }
     }
 }

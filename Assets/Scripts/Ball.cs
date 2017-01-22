@@ -38,7 +38,7 @@ public class Ball : MonoBehaviour {
         paddle = GameManager.Instance.GetOwner().GetComponent<Paddle>();
         this.transform.position = paddle.transform.position + new Vector3(0f, 1f, 0f);
         paddleToBallVector = this.transform.position - paddle.transform.position;
-        BallSprite.color = GameManager.Instance.SendColor();
+        BallSprite.color = GameManager.Instance.SendColor(true);
 
         targetArrow.enabled = true;
         targetArrow.color = BallSprite.color;
@@ -53,7 +53,7 @@ public class Ball : MonoBehaviour {
         if (col.gameObject.name.Contains("Player"))
         {
             GameManager.Instance.ChangeOwner();
-            BallSprite.color = GameManager.Instance.SendColor();
+            BallSprite.color = GameManager.Instance.SendColor(false);
         }
            
 
