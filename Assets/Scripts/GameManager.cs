@@ -62,8 +62,6 @@ public class GameManager : MonoBehaviour {
         points_P2    = 0;
 
         SlotMachine  = GameObject.Find("SlotMachine").GetComponent<Animator>();
-        SHLeft       = GameObject.Find("SHLeft").GetComponent<Animator>();
-        SHRight      = GameObject.Find("SHRight").GetComponent<Animator>();
 
         GameObject.Instantiate(ball);
         UpdateScore();
@@ -121,8 +119,15 @@ public class GameManager : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        		
-	}
+        if (SHLeft == null)
+        {
+            SHLeft = GameObject.Find("SHLeft(Clone)").GetComponent<Animator>();
+        }
+        if (SHRight == null)
+        {
+            SHRight = GameObject.Find("SHLeft(Clone)").GetComponent<Animator>();
+        }
+    }
 
     public void UpdateScore()
     {

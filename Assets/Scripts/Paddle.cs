@@ -43,7 +43,7 @@ public class Paddle : MonoBehaviour {
 	void Update () 
 	{
         Move(InputController.PaddleMovement(Controller));
-	
+        ControlVisualizer.Instance.show(Controller, InputController.GetInputDevice(Controller));
     }
 
 

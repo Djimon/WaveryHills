@@ -3,6 +3,24 @@ using System.Collections;
 using System;
 
 public static class InputController {
+    
+    public enum InputDevice
+    {
+        Keyboard,
+        GamePad,
+    }
+
+    public static InputDevice GetInputDevice(int playerIndex)
+    {
+        if (playerIndex < Input.GetJoystickNames().Length && Input.GetJoystickNames()[playerIndex - 1] != "")
+        {
+            return InputDevice.GamePad;
+        }
+        else
+        {
+            return InputDevice.Keyboard;
+        }
+    }
 
     public static float PaddleMovement(int playerIndex)
     {
@@ -68,7 +86,7 @@ public static class InputController {
     {
         if (playerIndex < Input.GetJoystickNames().Length && Input.GetJoystickNames()[playerIndex - 1] != "")
         {
-            return Input.GetButton("P" + playerIndex + "_XButton");
+            return Input.GetButton("P" + playerIndex + "_RBButton");
         }
         else
         {

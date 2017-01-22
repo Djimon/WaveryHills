@@ -36,6 +36,9 @@ public class Ball : MonoBehaviour {
         this.transform.position = paddle.transform.position + new Vector3(0f, 1f, 0f);
         paddleToBallVector = this.transform.position - paddle.transform.position;
         BallSprite.color = GameManager.Instance.SendColor();
+
+        int currentControllerIndex = GameManager.Instance.GetControler();
+        ControlVisualizer.Instance.show(currentControllerIndex, InputController.GetInputDevice(currentControllerIndex));
     }
 	
 	void OnCollisionEnter2D(Collision2D col)
@@ -56,6 +59,7 @@ public class Ball : MonoBehaviour {
 		if (!klicked)
 		{
 			this.transform.position = paddle.transform.position + paddleToBallVector;
+
 
             //if (Input.GetMouseButtonDown(0))
             //{
