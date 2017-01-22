@@ -8,14 +8,13 @@ public class SpecialBallSpawner : MonoBehaviour {
 
     [SerializeField]
     GameObject SoccerBallTemplate;
-    [SerializeField]
-    GameObject BreakoutBallTemplate;
+    
+    public Transform LeftSpawnPosition;
+    public Transform MidSpawnPosition;
+    public Transform RightSpawnPosition;
 
-    [SerializeField]
-    Transform SoccerSpawnPosition;
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         if(Instance != null)
         {
             Debug.LogError("there are more than one SpecialBallSpawners in the scene.");
@@ -28,31 +27,48 @@ public class SpecialBallSpawner : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SpawnBalls(6);
+            SpawnBalls(6, Position.Mid);
         }
 
 	}
 
-    public void SpawnBalls(int numSoccerBalls)
+    public enum Position
     {
-        SpawnBalls(numSoccerBalls, 0);
+        Left,
+        Mid,
+        Right
     }
 
-    public void SpawnBalls(int numSoccerBalls, int numBreakoutBalls)
+    public void SpawnBalls(int numSoccerBalls, Position position)
     {
-        StartCoroutine(SpawnBallsWithDelay(numSoccerBalls));
+        StartCoroutine(SpawnBallsWithDelay(numSoccerBalls, position));
     }
 
-    IEnumerator SpawnBallsWithDelay(int numSoccerBalls)
+    IEnumerator SpawnBallsWithDelay(int numSoccerBalls, Position position)
     {
         while(numSoccerBalls > 0)
         {
-            yield return new WaitForSeconds(0.4F);
-
             GameObject newBall = Instantiate(SoccerBallTemplate);
-            newBall.transform.position = SoccerSpawnPosition.position;
+            switch (position)
+            {
+                case Position.Left:
+                    newBall.transform.position = LeftSpawnPosition.position;
+                    break;
+
+                case Position.Mid:
+                    newBall.transform.position = MidSpawnPosition.position;
+                    break;
+
+                case Position.Right:
+                    newBall.transform.position = RightSpawnPosition.position;
+                    break;
+
+            }
+            newBall.tag = "ExtraSoccerBall";
 
             numSoccerBalls--;
+
+            yield return new WaitForSeconds(0.4F);
         }
     }
 
