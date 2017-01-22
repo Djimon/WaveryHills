@@ -6,26 +6,33 @@ using UnityEngine.SceneManagement;
 
 public class Slotholder : MonoBehaviour {
 
-    public GameObject left,right,SlotMachine;
-    public float distance;
-    private float SlotWidth;
+    public GameObject left, right;
+    public GameObject[] SlotMachine;
+    private float[] distance;
+    private float[] SlotWidth;
     Animator test;
 
     // Use this for initialization
     void Start()
     {
-        SlotWidth =  GetWidth(SlotMachine);
-        distance = SlotWidth;
-        //gameObject.transform.position = new Vector3(0f,4.6f,0f);  
-        Instantiate(left).transform.position = transform.position - new Vector3(distance / 2, 0f);
-        Instantiate(right).transform.position = transform.position + new Vector3(distance / 2, 0f);
+        for (int i = 0; i < SlotMachine.Length; i++)
+        {
+            Debug.Log(SlotMachine[i].name);
+            SlotWidth[i] = GetWidth(SlotMachine[i]);
+            distance[i] = SlotWidth[i];
 
+            Instantiate(left).transform.position = SlotMachine[i].transform.position - new Vector3(distance[i] / 2, 0f);
+            Instantiate(right).transform.position = SlotMachine[i].transform.position + new Vector3(distance[i] / 2, 0f);
+        }    
+
+        //gameObject.transform.position = new Vector3(0f,4.6f,0f);  
     }
+
     private void UpdateView()
     {
-        left.transform.position = transform.position - new Vector3(distance / 2, 0f);
-        right.transform.position = transform.position + new Vector3(distance / 2, 0f);
+
     }
+
     private float GetWidth(GameObject Obj)
     {
         return Obj.GetComponent<BoxCollider2D>().bounds.size.x;
@@ -34,7 +41,7 @@ public class Slotholder : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        UpdateView();
+        
     }
     /// <summary>
     /// Fades out the Slotmachine and shows a Timer during the PowerUp

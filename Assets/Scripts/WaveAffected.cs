@@ -8,6 +8,7 @@ public class WaveAffected : MonoBehaviour {
 
     [SerializeField]
     float _PushForce;
+    public float UpForce;
 
     // Use this for initialization
     void Start ()
@@ -39,7 +40,7 @@ public class WaveAffected : MonoBehaviour {
                     minIndex = i;
                 }
             }
-            GetComponent<Rigidbody2D>().AddForce(_PushForce * (new Vector2(waveX[minIndex], waveY[minIndex]) - ballPos) / minDist);
+            GetComponent<Rigidbody2D>().AddForce(_PushForce * (new Vector2(waveX[minIndex], waveY[minIndex]) - ballPos) / minDist + new Vector2(0f,UpForce));
 
             closestPosition = new Vector2(waveX[minIndex], waveY[minIndex]);
         }
