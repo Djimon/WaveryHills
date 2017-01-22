@@ -28,9 +28,16 @@ public class GoalController : MonoBehaviour {
         Invoke("LightOut", 0.2f);
         GameManager.Instance.AddPoint(Player);
         GameManager.Instance.UpdateScore();
-        // Reset Ball position
-        SoccerBall.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
-        SoccerBall.transform.position = initialBallPosition;       
+        if(collision.tag == "MainSoccerBall")
+        {
+            // Reset Ball position
+            SoccerBall.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+            SoccerBall.transform.position = initialBallPosition;
+        }
+        else if(collision.tag == "ExtraSoccerBall")
+        {
+            Destroy(collision.gameObject);
+        }
     }
 
     private void LightOut()

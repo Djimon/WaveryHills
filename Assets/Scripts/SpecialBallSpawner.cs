@@ -47,6 +47,7 @@ public class SpecialBallSpawner : MonoBehaviour {
         {
             GameObject newBall = Instantiate(SoccerBallTemplate);
             newBall.transform.position = SoccerSpawnPosition.position;
+            newBall.tag = "ExtraSoccerBall";
 
             numSoccerBalls--;
 
