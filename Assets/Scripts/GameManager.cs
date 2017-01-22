@@ -32,12 +32,16 @@ public class GameManager : MonoBehaviour {
         Tsunami // Amplitude höher
     }
 
+    LevelManager LevelManger;
     GameObject currentOwner;
     GameObject lastOwner;
     int Controller;
 
     Text scoreP1, scoreP2;
-    int points_P1, points_P2;
+    public int points_P1 {get;private set;}
+    public int points_P2 { get;private set; }
+    public string winner { get; private set; }
+
 
     public Ball ball;
 
@@ -45,7 +49,7 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
-
+        
     }
 
     void Start ()
@@ -66,6 +70,7 @@ public class GameManager : MonoBehaviour {
 
         //GameObject.Instantiate(ball);
         UpdateScore();
+        LevelManger = GameObject.FindObjectOfType<LevelManager>();
     }
 
     /// <summary>
@@ -137,7 +142,16 @@ public class GameManager : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+        if (points_P1 >= 10)
+            Win(Player.One);
+        if (points_P2 >= 10)
+            Win(Player.Two);
+    }
 
+    private void Win(Player player)
+    {
+        LevelManger.LoadLevel("Win");
+        winner = "Player "+player.ToString();    
     }
 
     public void UpdateScore()
