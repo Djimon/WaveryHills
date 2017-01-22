@@ -8,8 +8,6 @@ public class SpecialBallSpawner : MonoBehaviour {
 
     [SerializeField]
     GameObject SoccerBallTemplate;
-    [SerializeField]
-    GameObject BreakoutBallTemplate;
 
     [SerializeField]
     Transform SoccerSpawnPosition;
@@ -47,12 +45,12 @@ public class SpecialBallSpawner : MonoBehaviour {
     {
         while(numSoccerBalls > 0)
         {
-            yield return new WaitForSeconds(0.4F);
-
             GameObject newBall = Instantiate(SoccerBallTemplate);
             newBall.transform.position = SoccerSpawnPosition.position;
 
             numSoccerBalls--;
+
+            yield return new WaitForSeconds(0.4F);
         }
     }
 
