@@ -96,14 +96,32 @@ public class WaveManager : MonoBehaviour {
         List<GradientColorKey> colors = new List<GradientColorKey>();
         List<GradientAlphaKey> alphas = new List<GradientAlphaKey>();
 
-        foreach(Wave w in Waves)
+        colors.Add(new GradientColorKey(Color.white, 0F));
+        alphas.Add(new GradientAlphaKey(0F, 0F));
+        colors.Add(new GradientColorKey(Color.white, 1F));
+        alphas.Add(new GradientAlphaKey(0F, 1F));
+
+        foreach (Wave w in Waves)
         {
             if (colors.Count >= 8)
                 break;
-            float t = normalizedPosition(w.Center);
-            colors.Add(new GradientColorKey(w.Color, t));
-            alphas.Add(new GradientAlphaKey(1.0F, t));
+
+            if (w.Color.HasValue)
+            {
+                float t = normalizedPosition(w.Center);
+                if(0 < t && t < 1)
+                {
+                    colors.Add(new GradientColorKey(w.Color.Value, t));
+                    alphas.Add(new GradientAlphaKey(1.0F, t));
+                }
+            }
         }
+        if(colors.Count == 2)
+        {
+            colors.Add(new GradientColorKey(Color.white, 0.5F));
+            alphas.Add(new GradientAlphaKey(1F, 0.5F));
+        }
+
         Gradient g = new Gradient();
         g.SetKeys(colors.ToArray(), alphas.ToArray());
         lineRenderer.colorGradient = g;
